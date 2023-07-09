@@ -51,4 +51,16 @@
     color = colorArr[Math.floor(Math.random() * 2)];
     return color;
   };
+
+  // lets first set canvas
+  const setCanvas = () => {
+    // canvas fill
+    ctx.fillStyle = canvasFillColor;
+    ctx.fillRect(0, 0, w, h);
+
+    // canvas stroke
+    ctx.strokeStyle = canvasStrokeColor;
+    ctx.strokeRect(0, 0, w, h);
+  };
+
 })();
