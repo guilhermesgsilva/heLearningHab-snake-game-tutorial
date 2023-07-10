@@ -86,7 +86,34 @@
     ctx.stroke();
   };
 
-  // load
-  setCanvas();
-  drawGrid();
+  let showGrid = false;
+
+  const toggleGrid = () => {
+    if (!showGrid) {
+      showGrid = true;
+      showGridEl.innerHTML = `Hide Grid`;
+      return;
+    }
+    showGrid = false;
+    showGridEl.innerHTML = `Show Grid`;
+  };
+
+  const resetGame = () => {
+    location.reload();
+  };
+
+  // create a function for animation
+  const animate = () => {
+    setCanvas();
+    drawGrid();
+    setScore();
+    setTimeout(animate, 1000 / frameRate);
+  };
+
+  // event listenners
+  showGridEl.addEventListener("click", toggleGrid);
+  resetEl.addEventListener("click", resetGame);
+
+  // animate from here
+  animate();
 })();
