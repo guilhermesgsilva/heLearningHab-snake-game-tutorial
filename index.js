@@ -63,4 +63,30 @@
     ctx.strokeRect(0, 0, w, h);
   };
 
+  // create a function to draw the grid
+  const drawGrid = () => {
+    ctx.beginPath();
+
+    // let's create vertical lines
+    for (let i = 0; i <= grid_line_len; i += cellSize) {
+      // move to (x,y)
+      ctx.moveTo(i + pGrid, pGrid);
+      // draw line from (x,y)
+      ctx.lineTo(i + pGrid, grid_line_len + pGrid);
+    }
+
+    // horizontal lines
+    for (let i = 0; i <= grid_line_len; i += cellSize) {
+      ctx.moveTo(pGrid, i + pGrid);
+      ctx.lineTo(grid_line_len + pGrid, i + pGrid);
+    }
+
+    ctx.closePath();
+    ctx.strokeStyle = canvasStrokeColor;
+    ctx.stroke();
+  };
+
+  // load
+  setCanvas();
+  drawGrid();
 })();
