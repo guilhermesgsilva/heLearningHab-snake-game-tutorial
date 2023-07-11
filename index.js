@@ -86,6 +86,89 @@
     ctx.stroke();
   };
 
+  // create snake head
+  const head = {
+    x: 2,
+    y: 1,
+    color: randomColor(),
+    vX: 0,
+    vY: 0,
+    draw: () => {
+      ctx.fillStyle = head.color;
+      ctx.shadowColor = head.color;
+      ctx.shadowBlur = 2.5;
+      ctx.fillRect(
+        head.x * cellSize + pGrid,
+        head.y * cellSize + pGrid,
+        cellSize,
+        cellSize
+      );
+    },
+  };
+
+  // create tail
+  let tailLength = 4;
+  let snakeParts = [];
+
+  class Tail {
+    color = "#42f57e";
+    constructor(x, y) {
+      this.x = x;
+      this.y = y;
+    }
+    draw() {
+      ctx.fillStyle = this.color;
+      ctx.shadowColor = this.color;
+      ctx.shadowBlur = 2.5;
+      ctx.fillRect(
+        this.x * cellSize + pGrid,
+        this.y * cellSize + pGrid,
+        cellSize,
+        cellSize
+      );
+    }
+  }
+
+  // create food
+  const food = {
+    x: 5,
+    y: 5,
+    color: "#FF3131",
+    draw: () => {
+      ctx.fillStyle = food.color;
+      ctx.shadowColor = food.color;
+      ctx.shadowBlur = 5;
+      ctx.fillRect(
+        food.x * cellSize + pGrid,
+        food.y * cellSize + pGrid,
+        cellSize,
+        cellSize
+      );
+    },
+  };
+
+  const drawSnake = () => {
+    //loop through our snakeParts array and draw each part of tail
+    snakeParts.forEach((part) => {
+      part.draw();
+    });
+
+    snakeParts.push(new Tail(head.x, head.y)); // each time it will push new tail following the head
+
+    if (snakeParts.length > tailLength) {
+      snakeParts.shift(); // remove furthest item from snake part if we have more than our tail size
+    }
+
+    // draw head
+    head.color = randomColor();
+    head.draw();
+  };
+
+  const updateSnakePosition = () => {
+    head.x += head.vX;
+    head.y += head.vY;
+  };
+
   let showGrid = false;
 
   const toggleGrid = () => {
@@ -106,6 +189,8 @@
   const animate = () => {
     setCanvas();
     drawGrid();
+    drawSnake();
+    food.draw();
     setScore();
     setTimeout(animate, 1000 / frameRate);
   };
