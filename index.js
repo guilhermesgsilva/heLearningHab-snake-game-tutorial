@@ -185,12 +185,30 @@
     location.reload();
   };
 
+  // check food collision and update game
+
+  const foodCollision = () => {
+    let foodCollision = false;
+    snakeParts.forEach((part) => {
+      if (part.x == food.x && part.y == food.y) {
+        foodCollision = true;
+      }
+    });
+    if (foodCollision) {
+      food.x = Math.floor(Math.random() * cellCount);
+      food.y = Math.floor(Math.random() * cellCount);
+      score++;
+      tailLength++;
+    }
+  };
+
   // create a function for animation
   const animate = () => {
     setCanvas();
     drawGrid();
     drawSnake();
     updateSnakePosition();
+    foodCollision();
     food.draw();
     setScore();
     setTimeout(animate, 1000 / frameRate);
