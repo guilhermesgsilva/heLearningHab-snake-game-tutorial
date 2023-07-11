@@ -190,14 +190,45 @@
     setCanvas();
     drawGrid();
     drawSnake();
+    updateSnakePosition();
     food.draw();
     setScore();
     setTimeout(animate, 1000 / frameRate);
   };
 
+  const changeDir = (e) => {
+    let key = e.keyCode;
+
+    if (key == 68 || key == 39) {
+      if (head.vX === -1) return;
+      head.vX = 1;
+      head.vY = 0;
+      return;
+    }
+    if (key == 65 || key == 37) {
+      if (head.vX === 1) return;
+      head.vX = -1;
+      head.vY = 0;
+      return;
+    }
+    if (key == 87 || key == 38) {
+      if (head.vY === 1) return;
+      head.vX = 0;
+      head.vY = -1;
+      return;
+    }
+    if (key == 83 || key == 40) {
+      if (head.vY === -1) return;
+      head.vX = 0;
+      head.vY = 1;
+      return;
+    }
+  };
+
   // event listenners
   showGridEl.addEventListener("click", toggleGrid);
   resetEl.addEventListener("click", resetGame);
+  addEventListener("keydown", changeDir); // window event it will change our snake direction by changing head current direction/*  */
 
   // animate from here
   animate();
