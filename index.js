@@ -223,6 +223,8 @@
     return gameOver;
   };
 
+  // create a new text wich will show on game over
+
   // create a function for animation
   const animate = () => {
     setCanvas();
