@@ -202,6 +202,27 @@
     }
   };
 
+  const isGameOver = () => {
+    let gameOver = false;
+
+    snakeParts.forEach((part) => {
+      if (part.x == head.x && part.y == head.y) {
+        gameOver = true;
+      }
+    });
+
+    if (
+      head.x < 0 ||
+      head.y < 0 ||
+      head.x > cellCount - 1 ||
+      head.y > cellCount - 1
+    ) {
+      gameOver = true;
+    }
+
+    return gameOver;
+  };
+
   // create a function for animation
   const animate = () => {
     setCanvas();
