@@ -202,6 +202,8 @@
     }
   };
 
+  // create a new text wich will show on game over
+
   const isGameOver = () => {
     let gameOver = false;
 
@@ -223,19 +225,32 @@
     return gameOver;
   };
 
-  // create a new text wich will show on game over
-
-  // create a function for animation
-  const animate = () => {
-    setCanvas();
-    drawGrid();
-    drawSnake();
-    updateSnakePosition();
-    foodCollision();
-    food.draw();
-    setScore();
-    setTimeout(animate, 1000 / frameRate);
+  const showGameOver = () => {
+    const text = document.createElement("div");
+    text.setAttribute("id", "game_over");
+    text.innerHTML = "game over !";
+    const body = document.querySelector("body");
+    body.appendChild(text);
   };
+
+  const PlayButton = (show) => {
+    if (!show) {
+      playEl.style.display = "none";
+    } else {
+      playEl.style.display = "block";
+    }
+  };
+
+  const pauseGame = () => {
+    gameActive = false;
+    if (!gameActive) {
+      pauseEl.removeAttribute("class");
+      pauseEl.setAttribute("class", "pause-not-active");
+    }
+    if (!isGameOver()) PlayButton(true);
+  };
+
+  pauseEl.addEventListener("click", pauseGame);
 
   const changeDir = (e) => {
     let key = e.keyCode;
@@ -244,26 +259,52 @@
       if (head.vX === -1) return;
       head.vX = 1;
       head.vY = 0;
+      gameActive = true;
       return;
     }
     if (key == 65 || key == 37) {
       if (head.vX === 1) return;
       head.vX = -1;
       head.vY = 0;
+      gameActive = true;
       return;
     }
     if (key == 87 || key == 38) {
       if (head.vY === 1) return;
       head.vX = 0;
       head.vY = -1;
+      gameActive = true;
       return;
     }
     if (key == 83 || key == 40) {
       if (head.vY === -1) return;
       head.vX = 0;
       head.vY = 1;
+      gameActive = true;
       return;
     }
+  };
+
+  // create a function for animation
+  const animate = () => {
+    setCanvas();
+    if (showGrid) drawGrid();
+    drawSnake();
+    food.draw();
+    if (gameActive) {
+      PlayButton(false);
+      pauseEl.removeAttribute("class");
+      pauseEl.setAttribute("class", "pause-active");
+      updateSnakePosition();
+      if (isGameOver()) {
+        showGameOver();
+        PlayButton(false);
+        return;
+      }
+    }
+    setScore();
+    foodCollision();
+    setTimeout(animate, 1000 / frameRate);
   };
 
   // event listenners
