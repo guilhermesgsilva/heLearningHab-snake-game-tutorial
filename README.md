@@ -18,11 +18,11 @@ Based on the [Snake Game Using HTML Canvas and JavaScript Tutorial](https://yout
 
 1. Clone the repository:
    ```sh
-   git clone https://github.com/your-username/snake-game.git
+   git clone https://github.com/guilhermesgsilva/heLearningHab-snake-game-tutorial.git
    ```
 2. Navigate to the project directory:
    ```sh
-   cd snake-game
+   cd heLearningHab-snake-game-tutorial
    ```
 3. Open `index.html` in your browser.
 
